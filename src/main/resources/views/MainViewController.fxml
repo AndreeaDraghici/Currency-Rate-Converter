@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="373.0" prefWidth="510.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.MainViewController">
+    <children>
+        <AnchorPane prefHeight="72.0" prefWidth="510.0">
+            <children>
+                <Text fill="#cf1b2a" layoutX="78.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currency Rate" textAlignment="CENTER" wrappingWidth="354.13671875">
+                    <font>
+                        <Font name="Arial Bold" size="45.0" />
+                    </font>
+                </Text>
+            </children>
+        </AnchorPane>
+        <Text fill="#cf1d57" layoutX="85.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter currency and amount to convert" wrappingWidth="379.52864837646484">
+            <font>
+                <Font name="Arial Bold" size="20.0" />
+            </font>
+        </Text>
+        <TextField fx:id="amountField" alignment="CENTER" layoutX="14.0" layoutY="156.0" prefHeight="52.0" prefWidth="116.0" style="-fx-border-color: #163851;" text=" 100" />
+        <TextField fx:id="ccyOne" alignment="CENTER" layoutX="146.0" layoutY="156.0" prefHeight="52.0" prefWidth="78.0" style="-fx-border-color: #163851;" text="EUR" />
+        <TextField fx:id="ccyTwo" alignment="CENTER" layoutX="303.0" layoutY="156.0" prefHeight="52.0" prefWidth="88.0" style="-fx-border-color: #163851;" text="RON" />
+        <Text fill="#1a7dc4" fontSmoothingType="LCD" layoutX="243.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" to" wrappingWidth="37.95969581604004">
+            <font>
+                <Font name="Arial Black" size="24.0" />
+            </font>
+        </Text>
+        <Button fx:id="applyBtn" layoutX="410.0" layoutY="156.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="78.0" style="-fx-background-color: #163851; -fx-border-radius: 7px; -fx-background-radius: 7px;" text="Convert" textFill="#e10303">
+            <font>
+                <Font name="Arial Bold" size="14.0" />
+            </font>
+        </Button>
+        <Text fill="#239614" layoutX="13.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currency rate:" wrappingWidth="144.0">
+            <font>
+                <Font name="Arial Bold" size="18.0" />
+            </font>
+        </Text>
+        <Text fill="#239614" layoutX="14.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conversion:" wrappingWidth="116.0">
+            <font>
+                <Font name="Arial Bold" size="18.0" />
+            </font>
+        </Text>
+        <Text fill="#239614" layoutX="14.0" layoutY="341.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" wrappingWidth="116.0">
+            <font>
+                <Font name="Arial Bold" size="16.0" />
+            </font>
+        </Text>
+        <Text fx:id="rateCcy" fill="#163851" layoutX="146.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="116.0">
+            <font>
+                <Font name="Arial Bold" size="16.0" />
+            </font>
+        </Text>
+        <Text fx:id="conversionTotal" fill="#163851" layoutX="159.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="116.0">
+            <font>
+                <Font name="Arial Bold" size="16.0" />
+            </font>
+        </Text>
+        <Text fx:id="dateStamp" fill="#163851" layoutX="146.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="116.0">
+            <font>
+                <Font name="Arial Bold" size="16.0" />
+            </font>
+        </Text>
+    </children>
+</AnchorPane>
