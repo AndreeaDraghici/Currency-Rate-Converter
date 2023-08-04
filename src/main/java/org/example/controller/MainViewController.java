@@ -6,13 +6,17 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -84,6 +88,7 @@ public class MainViewController {
 
                     } catch (NumberFormatException e) {
                         Alert alert = new Alert(Alert.AlertType.WARNING);
+                        getAlertDefaultIcon(alert);
                         alert.setContentText(INVALID_AMOUNT_ENTERED);
                         alert.setHeaderText("Warning");
                         alert.showAndWait();
@@ -91,6 +96,7 @@ public class MainViewController {
                     }
                 } else {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
+                    getAlertDefaultIcon(alert);
                     alert.setContentText(INVALID_CURRENCIES_ENTERED);
                     alert.setHeaderText("Warning");
                     alert.showAndWait();
@@ -98,6 +104,11 @@ public class MainViewController {
                 }
             }
         });
+    }
+
+    private void getAlertDefaultIcon(Alert alert) {
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(Objects.requireNonNull(this.getClass().getResource("/logo/logo.png")).toString()));
     }
 
 
