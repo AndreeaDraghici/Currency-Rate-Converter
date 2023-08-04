@@ -4,13 +4,14 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import org.json.JSONObject;
 
 
 /**
@@ -18,6 +19,13 @@ import org.json.JSONObject;
  * Name of project: CurrencyConvertor
  */
 public class MainViewController {
+
+    @FXML
+    public TextField fromCurrency;
+
+    @FXML
+    public TextField convertCurrency;
+
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
 
@@ -26,12 +34,6 @@ public class MainViewController {
 
     @FXML // fx:id="amountField"
     private TextField amountField; // Value injected by FXMLLoader
-
-    @FXML // fx:id="ccyOne"
-    private TextField ccyOne; // Value injected by FXMLLoader
-
-    @FXML // fx:id="ccyTwo"
-    private TextField ccyTwo; // Value injected by FXMLLoader
 
     @FXML // fx:id="applyBtn"
     private Button applyBtn; // Value injected by FXMLLoader
@@ -46,43 +48,46 @@ public class MainViewController {
     private Text dateStamp; // Value injected by FXMLLoader
 
     @FXML
-        // This method is called by the FXMLLoader when initialization is complete
+    // This method is called by the FXMLLoader when initialization is complete
+    private Map<String, Double> exchangeRates = new HashMap<>();
+
+    @FXML
     void initialize() {
+        initializeExchangeRates();
+
         applyBtn.setOnAction(event -> {
-            String output = getUrlContent("https://api.currencylayer.com/live?access_key=02708fed4ac202adca96579fa72dc0e7" + ccyOne.getText().toUpperCase() + "," + ccyTwo.getText().toUpperCase());
-            if (!output.isEmpty()) {
-                JSONObject obj = new JSONObject(output);
-                dateStamp.setText(obj.getString("date"));
-                double ccyTwoValue = obj.getJSONObject("rates").getDouble(ccyTwo.getText()) /
-                        obj.getJSONObject("rates").getDouble(ccyOne.getText());
-                String ccyTwoStr = String.format("%.2f", ccyTwoValue) + " " + ccyTwo.getText();
+            String ccyOneText = fromCurrency.getText().toUpperCase();
+            String ccyTwoText = convertCurrency.getText().toUpperCase();
 
-                rateCcy.setText(ccyTwoStr);
+            if (!ccyOneText.isEmpty() && !ccyTwoText.isEmpty()) {
+                if (exchangeRates.containsKey(ccyOneText) && exchangeRates.containsKey(ccyTwoText)) {
+                    dateStamp.setText(""); // You may want to clear the date field as it's not relevant with hardcoded rates.
 
-                double amount = Double.parseDouble(amountField.getText());
-                double total = ccyTwoValue * amount;
-                String totalStr = String.format("%.2f", total) + " " + ccyTwo.getText();
-                conversionTotal.setText(totalStr);
+                    double ccyTwoValue = exchangeRates.get(ccyTwoText) / exchangeRates.get(ccyOneText);
+                    String ccyTwoStr = String.format("%.2f", ccyTwoValue) + " " + ccyTwoText;
+                    rateCcy.setText(ccyTwoStr);
+
+                    try {
+                        double amount = Double.parseDouble(amountField.getText());
+                        double total = ccyTwoValue * amount;
+                        String totalStr = String.format("%.2f", total) + " " + ccyTwoText;
+                        conversionTotal.setText(totalStr);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid amount entered!");
+                    }
+                } else {
+                    System.out.println("Invalid currencies entered!");
+                }
             }
         });
     }
 
-    private static String getUrlContent(String urlAddress) {
-        StringBuilder content = new StringBuilder();
-        try {
-            URL url = new URL(urlAddress);
-            URLConnection urlConn = url.openConnection();
 
-            try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()))) {
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    content.append(line).append("\n");
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Error in conversion");
-        }
-        return content.toString();
+    private void initializeExchangeRates() {
+        // Hardcode your exchange rates here
+        exchangeRates.put("USD", 1.0);
+        exchangeRates.put("EUR", 0.85);
+        exchangeRates.put("GBP", 0.72);
+        // Add other currency rates as needed
     }
-
 }
