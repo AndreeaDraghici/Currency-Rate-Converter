@@ -1,0 +1,213 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > MainViewController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.example.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: MainViewController (org.example.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MainViewController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    54.5%
+  </span>
+  <span class="absValue">
+    (18/33)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.example.controller;
+&nbsp;
+&nbsp;import java.io.BufferedReader;
+&nbsp;import java.io.InputStreamReader;
+&nbsp;import java.net.URL;
+&nbsp;import java.net.URLConnection;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.Map;
+&nbsp;import java.util.ResourceBundle;
+&nbsp;
+&nbsp;import javafx.fxml.FXML;
+&nbsp;import javafx.scene.control.Alert;
+&nbsp;import javafx.scene.control.Button;
+&nbsp;import javafx.scene.control.TextField;
+&nbsp;import javafx.scene.text.Text;
+&nbsp;import org.apache.logging.log4j.LogManager;
+&nbsp;import org.apache.logging.log4j.Logger;
+&nbsp;
+&nbsp;import static org.example.util.Constants.INVALID_AMOUNT_ENTERED;
+&nbsp;import static org.example.util.Constants.INVALID_CURRENCIES_ENTERED;
+&nbsp;
+&nbsp;
+&nbsp;/**
+&nbsp; * Created by Andreea Draghici on 8/1/2023
+&nbsp; * Name of project: CurrencyConvertor
+&nbsp; */
+<b class="fc">&nbsp;public class MainViewController {</b>
+&nbsp;
+<b class="fc">&nbsp;    private static final Logger logger = LogManager.getLogger(MainViewController.class);</b>
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    public TextField fromCurrency;
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    public TextField convertCurrency;
+&nbsp;
+&nbsp;    @FXML // ResourceBundle that was given to the FXMLLoader
+&nbsp;    private ResourceBundle resources;
+&nbsp;
+&nbsp;    @FXML // URL location of the FXML file that was given to the FXMLLoader
+&nbsp;    private URL location;
+&nbsp;
+&nbsp;    @FXML // fx:id=&quot;amountField&quot;
+&nbsp;    private TextField amountField; // Value injected by FXMLLoader
+&nbsp;
+&nbsp;    @FXML // fx:id=&quot;applyBtn&quot;
+&nbsp;    private Button applyBtn; // Value injected by FXMLLoader
+&nbsp;
+&nbsp;    @FXML // fx:id=&quot;rateCcy&quot;
+&nbsp;    private Text rateCcy; // Value injected by FXMLLoader
+&nbsp;
+&nbsp;    @FXML // fx:id=&quot;conversionTotal&quot;
+&nbsp;    private Text conversionTotal; // Value injected by FXMLLoader
+&nbsp;
+&nbsp;    @FXML // fx:id=&quot;dateStamp&quot;
+&nbsp;    private Text dateStamp; // Value injected by FXMLLoader
+&nbsp;
+&nbsp;    // This method is called by the FXMLLoader when initialization is complete
+<b class="fc">&nbsp;    private final Map&lt;String, Double&gt; exchangeRates = new HashMap&lt;&gt;();</b>
+&nbsp;
+&nbsp;    @FXML
+&nbsp;    void initialize() {
+<b class="fc">&nbsp;        initializeExchangeRates();</b>
+<b class="fc">&nbsp;        Alert alert = new Alert(Alert.AlertType.NONE);</b>
+&nbsp;
+<b class="fc">&nbsp;        logger.info(&quot;Starting the application....&quot;);</b>
+<b class="fc">&nbsp;        applyBtn.setOnAction(event -&gt; {</b>
+&nbsp;
+<b class="fc">&nbsp;            String currencyConversion = fromCurrency.getText().toUpperCase();</b>
+<b class="fc">&nbsp;            String toConversion = convertCurrency.getText().toUpperCase();</b>
+&nbsp;
+<b class="fc">&nbsp;            if (!currencyConversion.isEmpty() &amp;&amp; !toConversion.isEmpty()) {</b>
+<b class="fc">&nbsp;                if (exchangeRates.containsKey(currencyConversion) &amp;&amp; exchangeRates.containsKey(toConversion)) {</b>
+<b class="nc">&nbsp;                    dateStamp.setText(&quot;&quot;); // You may want to clear the date field as it&#39;s not relevant with hardcoded rates.</b>
+&nbsp;
+<b class="nc">&nbsp;                    double ccyTwoValue = exchangeRates.get(toConversion) / exchangeRates.get(currencyConversion);</b>
+<b class="nc">&nbsp;                    String ccyTwoStr = String.format(&quot;%.2f&quot;, ccyTwoValue) + &quot; &quot; + toConversion;</b>
+<b class="nc">&nbsp;                    rateCcy.setText(ccyTwoStr);</b>
+&nbsp;
+&nbsp;                    try {
+<b class="nc">&nbsp;                        double amount = Double.parseDouble(amountField.getText());</b>
+<b class="nc">&nbsp;                        double total = ccyTwoValue * amount;</b>
+<b class="nc">&nbsp;                        String totalStr = String.format(&quot;%.2f&quot;, total) + &quot; &quot; + toConversion;</b>
+<b class="nc">&nbsp;                        conversionTotal.setText(totalStr);</b>
+&nbsp;
+<b class="nc">&nbsp;                    } catch (NumberFormatException e) {</b>
+<b class="nc">&nbsp;                        logger.error(INVALID_AMOUNT_ENTERED);</b>
+<b class="nc">&nbsp;                        alert.setAlertType(Alert.AlertType.WARNING);</b>
+<b class="nc">&nbsp;                        alert.setContentText(INVALID_AMOUNT_ENTERED);</b>
+<b class="nc">&nbsp;                        alert.setHeaderText(&quot;Warning&quot;);</b>
+<b class="nc">&nbsp;                    }</b>
+<b class="nc">&nbsp;                } else {</b>
+<b class="fc">&nbsp;                    logger.error(INVALID_CURRENCIES_ENTERED);</b>
+<b class="fc">&nbsp;                    alert.setAlertType(Alert.AlertType.WARNING);</b>
+<b class="fc">&nbsp;                    alert.setContentText(INVALID_CURRENCIES_ENTERED);</b>
+<b class="fc">&nbsp;                    alert.setHeaderText(&quot;Warning&quot;);</b>
+&nbsp;                }
+&nbsp;            }
+&nbsp;        });
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    private void initializeExchangeRates() {
+&nbsp;        // Hardcode your exchange rates here
+<b class="fc">&nbsp;        exchangeRates.put(&quot;USD&quot;, 1.0);</b>
+<b class="fc">&nbsp;        exchangeRates.put(&quot;EUR&quot;, 0.85);</b>
+<b class="fc">&nbsp;        exchangeRates.put(&quot;GBP&quot;, 0.72);</b>
+&nbsp;        // Add other currency rates as needed
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-04 22:37</div>
+</div>
+</body>
+</html>
