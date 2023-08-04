@@ -9,9 +9,15 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import static org.example.util.Constants.INVALID_AMOUNT_ENTERED;
+import static org.example.util.Constants.INVALID_CURRENCIES_ENTERED;
 
 
 /**
@@ -19,6 +25,8 @@ import javafx.scene.text.Text;
  * Name of project: CurrencyConvertor
  */
 public class MainViewController {
+
+    private static final Logger logger = LogManager.getLogger(MainViewController.class);
 
     @FXML
     public TextField fromCurrency;
@@ -47,36 +55,45 @@ public class MainViewController {
     @FXML // fx:id="dateStamp"
     private Text dateStamp; // Value injected by FXMLLoader
 
-    @FXML
     // This method is called by the FXMLLoader when initialization is complete
-    private Map<String, Double> exchangeRates = new HashMap<>();
+    private final Map<String, Double> exchangeRates = new HashMap<>();
 
     @FXML
     void initialize() {
         initializeExchangeRates();
+        Alert alert = new Alert(Alert.AlertType.NONE);
 
+        logger.info("Starting the application....");
         applyBtn.setOnAction(event -> {
-            String ccyOneText = fromCurrency.getText().toUpperCase();
-            String ccyTwoText = convertCurrency.getText().toUpperCase();
 
-            if (!ccyOneText.isEmpty() && !ccyTwoText.isEmpty()) {
-                if (exchangeRates.containsKey(ccyOneText) && exchangeRates.containsKey(ccyTwoText)) {
+            String currencyConversion = fromCurrency.getText().toUpperCase();
+            String toConversion = convertCurrency.getText().toUpperCase();
+
+            if (!currencyConversion.isEmpty() && !toConversion.isEmpty()) {
+                if (exchangeRates.containsKey(currencyConversion) && exchangeRates.containsKey(toConversion)) {
                     dateStamp.setText(""); // You may want to clear the date field as it's not relevant with hardcoded rates.
 
-                    double ccyTwoValue = exchangeRates.get(ccyTwoText) / exchangeRates.get(ccyOneText);
-                    String ccyTwoStr = String.format("%.2f", ccyTwoValue) + " " + ccyTwoText;
+                    double ccyTwoValue = exchangeRates.get(toConversion) / exchangeRates.get(currencyConversion);
+                    String ccyTwoStr = String.format("%.2f", ccyTwoValue) + " " + toConversion;
                     rateCcy.setText(ccyTwoStr);
 
                     try {
                         double amount = Double.parseDouble(amountField.getText());
                         double total = ccyTwoValue * amount;
-                        String totalStr = String.format("%.2f", total) + " " + ccyTwoText;
+                        String totalStr = String.format("%.2f", total) + " " + toConversion;
                         conversionTotal.setText(totalStr);
+
                     } catch (NumberFormatException e) {
-                        System.out.println("Invalid amount entered!");
+                        logger.error(INVALID_AMOUNT_ENTERED);
+                        alert.setAlertType(Alert.AlertType.WARNING);
+                        alert.setContentText(INVALID_AMOUNT_ENTERED);
+                        alert.setHeaderText("Warning");
                     }
                 } else {
-                    System.out.println("Invalid currencies entered!");
+                    logger.error(INVALID_CURRENCIES_ENTERED);
+                    alert.setAlertType(Alert.AlertType.WARNING);
+                    alert.setContentText(INVALID_CURRENCIES_ENTERED);
+                    alert.setHeaderText("Warning");
                 }
             }
         });
