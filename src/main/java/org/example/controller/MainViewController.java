@@ -61,7 +61,6 @@ public class MainViewController {
     @FXML
     void initialize() {
         initializeExchangeRates();
-        Alert alert = new Alert(Alert.AlertType.NONE);
 
         logger.info("Starting the application....");
         applyBtn.setOnAction(event -> {
@@ -84,16 +83,18 @@ public class MainViewController {
                         conversionTotal.setText(totalStr);
 
                     } catch (NumberFormatException e) {
-                        logger.error(INVALID_AMOUNT_ENTERED);
-                        alert.setAlertType(Alert.AlertType.WARNING);
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
                         alert.setContentText(INVALID_AMOUNT_ENTERED);
                         alert.setHeaderText("Warning");
+                        alert.showAndWait();
+                        logger.error(INVALID_AMOUNT_ENTERED);
                     }
                 } else {
-                    logger.error(INVALID_CURRENCIES_ENTERED);
-                    alert.setAlertType(Alert.AlertType.WARNING);
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setContentText(INVALID_CURRENCIES_ENTERED);
                     alert.setHeaderText("Warning");
+                    alert.showAndWait();
+                    logger.error(INVALID_CURRENCIES_ENTERED);
                 }
             }
         });
