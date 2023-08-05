@@ -2,14 +2,14 @@ package org.example.controller;
 
 import java.awt.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -23,7 +23,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.example.util.Constants;
+
 
 import static org.example.util.Constants.*;
 
@@ -123,10 +123,13 @@ public class MainViewController {
 
             conversionTotal.setText(totalStr);
 
+            generateReport(timestamp, currencyTwoValue, currencyOne, currencyTwoValue, toCurrencyTwo, total);
+
         } catch (NumberFormatException e) {
             throw new RuntimeException(INVALID_AMOUNT_ENTERED);
         }
     }
+
 
     /**
      * method used to build be menu available in the application
@@ -174,5 +177,35 @@ public class MainViewController {
         exchangeRates.put("EUR", 0.85);
         exchangeRates.put("GBP", 0.72);
         // Add other currency rates as needed
+    }
+
+    private void generateReport(Timestamp date, double fromValue, String fromCurrency, double toValue, String toCurrency, double convertedValue) {
+        StringBuilder htmlContent = new StringBuilder();
+        htmlContent.append("<!DOCTYPE html>\n");
+        htmlContent.append("<html>\n");
+        htmlContent.append("<head>\n");
+        htmlContent.append("    <title>Currency Conversion Report</title>\n");
+        htmlContent.append("</head>\n");
+        htmlContent.append("<body>\n");
+        htmlContent.append("<h1>Conversion Status</h1>\n");
+        htmlContent.append("<p>Conversion Date: ").append(date).append("</p>\n");
+        htmlContent.append("<p>The starting currency value: ").append(fromValue).append("</p>\n");
+        htmlContent.append("<p>Departure currency: ").append(fromCurrency).append("</p>\n");
+        htmlContent.append("<p>Arrival currency value: ").append(toValue).append("</p>\n");
+        htmlContent.append("<p>Arrival currency: ").append(toCurrency).append("</p>\n");
+        htmlContent.append("<p>Conversion value: ").append(convertedValue).append("</p>\n");
+        htmlContent.append("</body>\n");
+        htmlContent.append("</html>");
+
+        saveReportToFile(htmlContent.toString());
+
+    }
+
+    private void saveReportToFile(String htmlContent) {
+        try (PrintWriter writer = new PrintWriter("src/main/resources/report/StatusConversion.html")) {
+            writer.write(htmlContent);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Failed to save the report generation due to: " + e.getMessage());
+        }
     }
 }
