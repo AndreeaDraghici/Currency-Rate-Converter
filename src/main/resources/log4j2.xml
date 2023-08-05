@@ -2,7 +2,8 @@
 <Configuration status="INFO">
     <Appenders>
         <Console name="ConsoleAppender" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%-5level] %logger{36} - %msg%n"/>
+            <PatternLayout disableAnsi="false"
+                           pattern="%highlight{%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n}{FATAL=red blink, ERROR=red bold, WARN=yellow bold, INFO=blue bold, DEBUG=green bold, TRACE=blue}"/>
         </Console>
         <File name="FileAppender" fileName="./logs/CurrencyConverter${date:yyyy-MM-dd}.log" immediateFlush="false"
               append="true">
