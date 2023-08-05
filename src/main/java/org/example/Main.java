@@ -21,7 +21,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(FXML)));
         primaryStage.setTitle(String.format("%s%s", TOOL_NAME, TOOL_VERSION));
-        primaryStage.getIcons().add(new Image(LOGO_JAVA_LOGO));
+        primaryStage.getIcons().add(new Image(LOGO_JAVA));
         primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
         primaryStage.setResizable(false);
         primaryStage.show();
