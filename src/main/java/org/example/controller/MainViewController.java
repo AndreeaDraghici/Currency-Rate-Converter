@@ -10,6 +10,7 @@ import java.net.URL;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -185,6 +186,12 @@ public class MainViewController {
         htmlContent.append("<html>\n");
         htmlContent.append("<head>\n");
         htmlContent.append("    <title>Currency Conversion Report</title>\n");
+        htmlContent.append("    <style>\n");
+        htmlContent.append("        body { font-family: Arial, sans-serif; background-color: #8FBC8F;}\n");
+        htmlContent.append("        h1 { color: #007bff; }\n");
+        htmlContent.append("        footer {text-align: center; padding: 3px; background-color: DarkSalmon; color: white; + }\n");
+        htmlContent.append("        p {color: navy;text-indent: 30px;text-transform: uppercase;}");
+        htmlContent.append("    </style>\n");
         htmlContent.append("</head>\n");
         htmlContent.append("<body>\n");
         htmlContent.append("<h1>Conversion Status</h1>\n");
@@ -195,6 +202,9 @@ public class MainViewController {
         htmlContent.append("<p>Arrival currency: ").append(toCurrency).append("</p>\n");
         htmlContent.append("<p>Conversion value: ").append(convertedValue).append("</p>\n");
         htmlContent.append("</body>\n");
+        htmlContent.append("<footer>\n");
+        htmlContent.append("    <p>Developed by Andreea Draghici.</p>\n");
+        htmlContent.append("</footer>\n");
         htmlContent.append("</html>");
 
         saveReportToFile(htmlContent.toString());
