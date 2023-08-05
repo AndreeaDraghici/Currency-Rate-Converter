@@ -51,14 +51,9 @@
                 <Font name="Arial Bold" size="16.0" />
             </font>
         </Text>
-        <Text fx:id="dateStamp" fill="#163851" layoutX="64.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="420.8000030517578">
+        <Text fx:id="dateStamp" fill="#163851" layoutX="59.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="269.8000030517578">
             <font>
                 <Font name="Arial Bold" size="16.0" />
-            </font>
-        </Text>
-        <Text fill="#cf1b2a" layoutX="84.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currency Rate" textAlignment="CENTER" wrappingWidth="354.13671875">
-            <font>
-                <Font name="Arial Bold" size="24.0" />
             </font>
         </Text>
     </children>

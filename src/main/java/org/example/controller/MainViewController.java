@@ -21,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -45,6 +46,7 @@ public class MainViewController {
 
     @FXML
     public AnchorPane rootPane;
+
 
     @FXML
     private ResourceBundle resources;
@@ -85,11 +87,18 @@ public class MainViewController {
             String currencyOne = fromCurrency.getText().toUpperCase();
             String toCurrencyTwo = convertCurrency.getText().toUpperCase();
 
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Choose output directory and save the report");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("HTML Files", "*.html"));
+            File file = fileChooser.showSaveDialog(rootPane.getScene().getWindow());
+
             try {
                 if (!currencyOne.isEmpty() && !toCurrencyTwo.isEmpty()) {
                     if (exchangeRates.containsKey(currencyOne) && exchangeRates.containsKey(toCurrencyTwo)) {
-                        buildCurrencyConversion(currencyOne, toCurrencyTwo);
-                        logger.info(CONVERSION_WAS_CREATED_WITH_SUCCESS);
+                        if (file != null) {
+                            buildCurrencyConversion(file, currencyOne, toCurrencyTwo);
+                            logger.info(CONVERSION_WAS_CREATED_WITH_SUCCESS);
+                        }
                     } else {
                         throw new RuntimeException(INVALID_CURRENCIES_ENTERED);
                     }
@@ -106,7 +115,7 @@ public class MainViewController {
         });
     }
 
-    private void buildCurrencyConversion(String currencyOne, String toCurrencyTwo) {
+    private void buildCurrencyConversion(File file, String currencyOne, String toCurrencyTwo) {
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         dateStamp.setText(SIMPLE_DATE_FORMAT.format(timestamp));
@@ -124,7 +133,7 @@ public class MainViewController {
 
             conversionTotal.setText(totalStr);
 
-            generateReport(timestamp, amount, currencyOne, currencyTwoValue, toCurrencyTwo, total);
+            generateReport(file, timestamp, amount, currencyOne, currencyTwoValue, toCurrencyTwo, total);
 
         } catch (NumberFormatException e) {
             throw new RuntimeException(INVALID_AMOUNT_ENTERED);
@@ -180,7 +189,7 @@ public class MainViewController {
         // Add other currency rates as needed
     }
 
-    private void generateReport(Timestamp date, double fromValue, String fromCurrency, double toValue, String toCurrency, double convertedValue) {
+    private void generateReport(File file, Timestamp date, double fromValue, String fromCurrency, double toValue, String toCurrency, double convertedValue) {
         String htmlContent = "<!DOCTYPE html>\n" +
                 "<html>\n" +
                 "<head>\n" +
@@ -206,12 +215,12 @@ public class MainViewController {
                 "</footer>\n" +
                 "</html>";
 
-        saveReportToFile(htmlContent);
+        saveReportToFile(file, htmlContent);
 
     }
 
-    private void saveReportToFile(String htmlContent) {
-        try (PrintWriter writer = new PrintWriter("src/main/resources/report/StatusConversion.html")) {
+    private void saveReportToFile(File file, String htmlContent) throws RuntimeException {
+        try (PrintWriter writer = new PrintWriter(file)) {
             writer.write(htmlContent);
         } catch (FileNotFoundException e) {
             throw new RuntimeException("Failed to save the report generation due to: " + e.getMessage());
