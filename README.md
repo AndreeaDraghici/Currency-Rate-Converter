@@ -6,12 +6,12 @@ This is an GUI Application ( JavaFX based ) to convert the currency rate.
 
 ## Abbreviations
 
-| Abbreviation | Description                              | 
-|--------------|------------------------------------------|
-| GUI          | **G**raphical **U**ser **I**nterface     |   
+| Abbreviation | Description                               | 
+|--------------|-------------------------------------------|
+| GUI          | **G**raphical **U**ser **I**nterface      |   
 | HTML         | **H**yper**T**ext **M**arkup **L**anguage |   
-| JDK          | **J**ava **D**evelopment **K**it         |  
-| JRE          | **J**ava  **R**untime  **E**nvironment   |
+| JDK          | **J**ava **D**evelopment **K**it          |  
+| JRE          | **J**ava  **R**untime  **E**nvironment    |
 
 ----------------------------------------
 
