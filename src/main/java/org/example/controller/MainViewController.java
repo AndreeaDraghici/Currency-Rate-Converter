@@ -1,22 +1,31 @@
 package org.example.controller;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.example.util.Constants;
 
-import static org.example.util.Constants.INVALID_AMOUNT_ENTERED;
-import static org.example.util.Constants.INVALID_CURRENCIES_ENTERED;
+import static org.example.util.Constants.*;
 
 
 /**
@@ -32,6 +41,9 @@ public class MainViewController {
 
     @FXML
     public TextField convertCurrency;
+
+    @FXML
+    public AnchorPane rootPane;
 
     @FXML
     private ResourceBundle resources;
@@ -60,48 +72,94 @@ public class MainViewController {
 
     @FXML
     void initialize() {
+        rootPane.getChildren().add(buildMenuItems());
         initializeExchangeRates();
+        setApplyButton();
+    }
 
-        logger.info("Starting the application....");
+    private void setApplyButton() {
+
         applyBtn.setOnAction(event -> {
 
-            String currencyConversion = fromCurrency.getText().toUpperCase();
-            String toConversion = convertCurrency.getText().toUpperCase();
+            String currencyOne = fromCurrency.getText().toUpperCase();
+            String toCurrencyTwo = convertCurrency.getText().toUpperCase();
 
-            if (!currencyConversion.isEmpty() && !toConversion.isEmpty()) {
-                if (exchangeRates.containsKey(currencyConversion) && exchangeRates.containsKey(toConversion)) {
-
-                    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                    dateStamp.setText(SIMPLE_DATE_FORMAT.format(timestamp));
-
-                    double ccyTwoValue = exchangeRates.get(toConversion) / exchangeRates.get(currencyConversion);
-                    String ccyTwoStr = String.format("%.2f", ccyTwoValue) + " " + toConversion;
-                    rateCcy.setText(ccyTwoStr);
-
-                    try {
-                        double amount = Double.parseDouble(amountField.getText());
-                        double total = ccyTwoValue * amount;
-                        String totalStr = String.format("%.2f", total) + " " + toConversion;
-                        conversionTotal.setText(totalStr);
-
-                    } catch (NumberFormatException e) {
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        getAlertDefaultIcon(alert);
-                        alert.setContentText(INVALID_AMOUNT_ENTERED);
-                        alert.setHeaderText("Warning");
-                        alert.showAndWait();
-                        logger.error(INVALID_AMOUNT_ENTERED);
+            try {
+                if (!currencyOne.isEmpty() && !toCurrencyTwo.isEmpty()) {
+                    if (exchangeRates.containsKey(currencyOne) && exchangeRates.containsKey(toCurrencyTwo)) {
+                        buildCurrencyConversion(currencyOne, toCurrencyTwo);
+                        logger.info(CONVERSION_WAS_CREATED_WITH_SUCCESS);
+                    } else {
+                        throw new RuntimeException(INVALID_CURRENCIES_ENTERED);
                     }
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    getAlertDefaultIcon(alert);
-                    alert.setContentText(INVALID_CURRENCIES_ENTERED);
-                    alert.setHeaderText("Warning");
-                    alert.showAndWait();
-                    logger.error(INVALID_CURRENCIES_ENTERED);
                 }
+            } catch (Exception exception) {
+
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                getAlertDefaultIcon(alert);
+                alert.setHeaderText("Warning");
+                alert.setContentText(String.format("%s%s", WARNING_TO_BUILD_THE_CURRENCY_CONVERSION, exception.getMessage()));
+                alert.showAndWait();
+                logger.error(String.format("%s%s", WARNING_TO_BUILD_THE_CURRENCY_CONVERSION, exception.getMessage()));
             }
         });
+    }
+
+    private void buildCurrencyConversion(String currencyOne, String toCurrencyTwo) {
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        dateStamp.setText(SIMPLE_DATE_FORMAT.format(timestamp));
+
+        double currencyTwoValue = exchangeRates.get(toCurrencyTwo) / exchangeRates.get(currencyOne);
+        String ccyTwoStr = String.format("%s %s", String.format("%.2f", currencyTwoValue), toCurrencyTwo);
+
+        rateCcy.setText(ccyTwoStr);
+
+        try {
+            double amount = Double.parseDouble(amountField.getText());
+            double total = currencyTwoValue * amount;
+
+            String totalStr = String.format("%s %s", String.format("%.2f", total), toCurrencyTwo);
+
+            conversionTotal.setText(totalStr);
+
+        } catch (NumberFormatException e) {
+            throw new RuntimeException(INVALID_AMOUNT_ENTERED);
+        }
+    }
+
+    /**
+     * method used to build be menu available in the application
+     *
+     * @return the menu of the application
+     */
+    private MenuBar buildMenuItems() {
+        Menu fileMenu = new Menu("File");
+        Menu helpMenu = new Menu("Help");
+
+        MenuItem exitItem = new MenuItem("Exit");
+        MenuItem aboutItem = new MenuItem("About");
+
+        exitItem.setOnAction(event -> System.exit(0));
+        aboutItem.setOnAction(event -> openReadmeInBrowser());
+
+        fileMenu.getItems().add(exitItem);
+        helpMenu.getItems().add(aboutItem);
+
+        MenuBar menuBar = new MenuBar();
+        menuBar.getMenus().addAll(fileMenu, helpMenu);
+
+        return menuBar;
+    }
+
+    private void openReadmeInBrowser() {
+        try {
+            File file = new File(DOCUMENTATION_PATH);
+            URI uri = file.toURI();
+            Desktop.getDesktop().browse(uri);
+        } catch (IOException e) {
+            logger.error(String.format("Failed to open the documentation due to: %s", e.getMessage()));
+        }
     }
 
     private void getAlertDefaultIcon(Alert alert) {

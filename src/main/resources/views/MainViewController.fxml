@@ -6,18 +6,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="373.0" prefWidth="510.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.MainViewController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="373.0" prefWidth="510.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.controller.MainViewController">
     <children>
-        <AnchorPane prefHeight="72.0" prefWidth="510.0">
-            <children>
-                <Text fill="#cf1b2a" layoutX="78.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currency Rate" textAlignment="CENTER" wrappingWidth="354.13671875">
-                    <font>
-                        <Font name="Arial Bold" size="45.0" />
-                    </font>
-                </Text>
-            </children>
-        </AnchorPane>
-        <Text fill="#cf1d57" layoutX="85.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter currency and amount to convert" wrappingWidth="379.52864837646484">
+        <Text fill="#cf1d57" layoutX="84.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter currency and amount to convert" wrappingWidth="379.52864837646484">
             <font>
                 <Font name="Arial Bold" size="20.0" />
             </font>
@@ -63,6 +54,11 @@
         <Text fx:id="dateStamp" fill="#163851" layoutX="64.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="420.8000030517578">
             <font>
                 <Font name="Arial Bold" size="16.0" />
+            </font>
+        </Text>
+        <Text fill="#cf1b2a" layoutX="84.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currency Rate" textAlignment="CENTER" wrappingWidth="354.13671875">
+            <font>
+                <Font name="Arial Bold" size="24.0" />
             </font>
         </Text>
     </children>
