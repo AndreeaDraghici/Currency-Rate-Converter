@@ -22,15 +22,15 @@
                 <Font name="Arial Bold" size="20.0" />
             </font>
         </Text>
-        <TextField fx:id="amountField" alignment="CENTER" layoutX="14.0" layoutY="156.0" prefHeight="52.0" prefWidth="116.0" style="-fx-border-color: #163851;" text=" 100" />
+        <TextField fx:id="amountField" alignment="CENTER" layoutX="14.0" layoutY="156.0" prefHeight="52.0" prefWidth="116.0" style="-fx-border-color: #163851;" text="1" />
         <TextField fx:id="fromCurrency" alignment="CENTER" layoutX="146.0" layoutY="156.0" prefHeight="52.0" prefWidth="78.0" style="-fx-border-color: #163851;" text="EUR" />
-        <TextField fx:id="convertCurrency" alignment="CENTER" layoutX="303.0" layoutY="156.0" prefHeight="52.0" prefWidth="88.0" style="-fx-border-color: #163851;" text="RON" />
+        <TextField fx:id="convertCurrency" alignment="CENTER" layoutX="303.0" layoutY="156.0" prefHeight="52.0" prefWidth="88.0" style="-fx-border-color: #163851;" text="USD" />
         <Text fill="#1a7dc4" fontSmoothingType="LCD" layoutX="243.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" to" wrappingWidth="37.95969581604004">
             <font>
                 <Font name="Arial Black" size="24.0" />
             </font>
         </Text>
-        <Button fx:id="applyBtn" layoutX="410.0" layoutY="156.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="78.0" style="-fx-background-color: #163851; -fx-border-radius: 7px; -fx-background-radius: 7px;" text="Convert" textFill="#e10303">
+        <Button fx:id="applyBtn" layoutX="410.0" layoutY="156.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="78.0" style="-fx-background-color: #456623; -fx-border-radius: 7px; -fx-background-radius: 7px;" text="Convert" textFill="WHITE">
             <font>
                 <Font name="Arial Bold" size="14.0" />
             </font>
@@ -50,17 +50,17 @@
                 <Font name="Arial Bold" size="16.0" />
             </font>
         </Text>
-        <Text fx:id="rateCcy" fill="#163851" layoutX="146.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="116.0">
+        <Text fx:id="rateCcy" fill="#163851" layoutX="146.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="340.0">
             <font>
                 <Font name="Arial Bold" size="16.0" />
             </font>
         </Text>
-        <Text fx:id="conversionTotal" fill="#163851" layoutX="130.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="116.0">
+        <Text fx:id="conversionTotal" fill="#11354e" layoutX="130.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="354.13671875">
             <font>
                 <Font name="Arial Bold" size="16.0" />
             </font>
         </Text>
-        <Text fx:id="dateStamp" fill="#163851" layoutX="63.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="116.0">
+        <Text fx:id="dateStamp" fill="#163851" layoutX="64.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="420.8000030517578">
             <font>
                 <Font name="Arial Bold" size="16.0" />
             </font>

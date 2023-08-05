@@ -1,20 +1,15 @@
 package org.example.controller;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.net.URL;
-import java.net.URLConnection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -38,29 +33,30 @@ public class MainViewController {
     @FXML
     public TextField convertCurrency;
 
-    @FXML // ResourceBundle that was given to the FXMLLoader
+    @FXML
     private ResourceBundle resources;
 
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
+    @FXML
     private URL location;
 
-    @FXML // fx:id="amountField"
-    private TextField amountField; // Value injected by FXMLLoader
+    @FXML
+    private TextField amountField;
 
-    @FXML // fx:id="applyBtn"
-    private Button applyBtn; // Value injected by FXMLLoader
+    @FXML
+    private Button applyBtn;
 
-    @FXML // fx:id="rateCcy"
-    private Text rateCcy; // Value injected by FXMLLoader
+    @FXML
+    private Text rateCcy;
 
-    @FXML // fx:id="conversionTotal"
-    private Text conversionTotal; // Value injected by FXMLLoader
+    @FXML
+    private Text conversionTotal;
 
-    @FXML // fx:id="dateStamp"
-    private Text dateStamp; // Value injected by FXMLLoader
+    @FXML
+    private Text dateStamp;
 
-    // This method is called by the FXMLLoader when initialization is complete
     private final Map<String, Double> exchangeRates = new HashMap<>();
+
+    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @FXML
     void initialize() {
@@ -74,7 +70,9 @@ public class MainViewController {
 
             if (!currencyConversion.isEmpty() && !toConversion.isEmpty()) {
                 if (exchangeRates.containsKey(currencyConversion) && exchangeRates.containsKey(toConversion)) {
-                    dateStamp.setText(""); // You may want to clear the date field as it's not relevant with hardcoded rates.
+
+                    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                    dateStamp.setText(SIMPLE_DATE_FORMAT.format(timestamp));
 
                     double ccyTwoValue = exchangeRates.get(toConversion) / exchangeRates.get(currencyConversion);
                     String ccyTwoStr = String.format("%.2f", ccyTwoValue) + " " + toConversion;
