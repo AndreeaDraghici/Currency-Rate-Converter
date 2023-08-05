@@ -181,33 +181,32 @@ public class MainViewController {
     }
 
     private void generateReport(Timestamp date, double fromValue, String fromCurrency, double toValue, String toCurrency, double convertedValue) {
-        StringBuilder htmlContent = new StringBuilder();
-        htmlContent.append("<!DOCTYPE html>\n");
-        htmlContent.append("<html>\n");
-        htmlContent.append("<head>\n");
-        htmlContent.append("    <title>Currency Conversion Report</title>\n");
-        htmlContent.append("    <style>\n");
-        htmlContent.append("        body { font-family: Arial, sans-serif; background-color: #8FBC8F;}\n");
-        htmlContent.append("        h1 { color: #007bff; }\n");
-        htmlContent.append("        footer {text-align: center; padding: 3px; background-color: DarkSalmon; color: white; + }\n");
-        htmlContent.append("        p {color: navy;text-indent: 30px;text-transform: uppercase;}");
-        htmlContent.append("    </style>\n");
-        htmlContent.append("</head>\n");
-        htmlContent.append("<body>\n");
-        htmlContent.append("<h1>Conversion Status</h1>\n");
-        htmlContent.append("<p>Conversion Date: ").append(date).append("</p>\n");
-        htmlContent.append("<p>The starting currency value: ").append(fromValue).append("</p>\n");
-        htmlContent.append("<p>Departure currency: ").append(fromCurrency).append("</p>\n");
-        htmlContent.append("<p>Arrival currency value: ").append(toValue).append("</p>\n");
-        htmlContent.append("<p>Arrival currency: ").append(toCurrency).append("</p>\n");
-        htmlContent.append("<p>Conversion value: ").append(convertedValue).append("</p>\n");
-        htmlContent.append("</body>\n");
-        htmlContent.append("<footer>\n");
-        htmlContent.append("    <p>Developed by Andreea Draghici.</p>\n");
-        htmlContent.append("</footer>\n");
-        htmlContent.append("</html>");
+        String htmlContent = "<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "<head>\n" +
+                "    <title>Currency Conversion Report</title>\n" +
+                "    <style>\n" +
+                "        body { font-family: Arial, sans-serif; background-color: #8FBC8F;}\n" +
+                "        h1 { color: #007bff; }\n" +
+                "        footer {text-align: center; padding: 3px; background-color: DarkSalmon; color: white; + }\n" +
+                "        p {color: navy;text-indent: 30px;text-transform: uppercase;}" +
+                "    </style>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "<h1>Conversion Status</h1>\n" +
+                "<p>Conversion Date: " + date + "</p>\n" +
+                "<p>The starting currency value: " + fromValue + "</p>\n" +
+                "<p>Departure currency: " + fromCurrency + "</p>\n" +
+                "<p>Arrival currency value: " + toValue + "</p>\n" +
+                "<p>Arrival currency: " + toCurrency + "</p>\n" +
+                "<p>Conversion value: " + convertedValue + "</p>\n" +
+                "</body>\n" +
+                "<footer>\n" +
+                "    <p>Developed by Andreea Draghici.</p>\n" +
+                "</footer>\n" +
+                "</html>";
 
-        saveReportToFile(htmlContent.toString());
+        saveReportToFile(htmlContent);
 
     }
 
