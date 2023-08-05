@@ -27,9 +27,6 @@ public class Constants {
     public static final String INVALID_CURRENCIES_ENTERED                        = "Invalid currencies entered!";
 
 
-    public static final String DOCUMENTATION_PATH                                = "src/main/resources/documentation/README.pdf";
-
-
     public static final String WARNING_TO_BUILD_THE_CURRENCY_CONVERSION          = "Warning to build the currency conversion due to: ";
 
     public static final String CONVERSION_WAS_CREATED_WITH_SUCCESS               = "Currency conversion was created with success!";

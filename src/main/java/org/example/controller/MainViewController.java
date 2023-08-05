@@ -7,9 +7,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URL;
+import java.nio.file.*;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Stream;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -165,15 +167,35 @@ public class MainViewController {
         return menuBar;
     }
 
+    /**
+     * method have the responsible for opening the README.pdf file in the default browser,
+     * it uses a recursive search to find the file in the project directory and its subdirectories
+     */
     private void openReadmeInBrowser() {
         try {
-            File file = new File(DOCUMENTATION_PATH);
-            URI uri = file.toURI();
-            Desktop.getDesktop().browse(uri);
+            String fileName = "README.pdf";
+            //using a glob pattern to match the file with the name "README.pdf" anywhere in the directory structure.
+            PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:**/" + fileName);
+            //gets the current working directory of the project as the starting path for the search.
+            Path startPath = Paths.get(System.getProperty("user.dir"));
+
+            try (Stream<Path> paths = Files.walk(startPath)) {
+                Optional<Path> readmePath = paths.filter(matcher::matches).findFirst();
+
+                if (readmePath.isPresent()) {
+                    //converts the file path to a URI so that it can be opened in the browser.
+                    URI uri = readmePath.get().toUri();
+                    //uses the Desktop class to open the URI in the default system browser.
+                    Desktop.getDesktop().browse(uri);
+                } else {
+                    throw new RuntimeException("README.pdf not found in the project directory.");
+                }
+            }
         } catch (IOException e) {
-            logger.error(String.format("Failed to open the documentation due to: %s", e.getMessage()));
+            logger.error("Failed to open the documentation due to: " + e.getMessage());
         }
     }
+
 
     private void getAlertDefaultIcon(Alert alert) {
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
