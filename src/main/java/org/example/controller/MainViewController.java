@@ -123,7 +123,7 @@ public class MainViewController {
 
             conversionTotal.setText(totalStr);
 
-            generateReport(timestamp, currencyTwoValue, currencyOne, currencyTwoValue, toCurrencyTwo, total);
+            generateReport(timestamp, amount, currencyOne, currencyTwoValue, toCurrencyTwo, total);
 
         } catch (NumberFormatException e) {
             throw new RuntimeException(INVALID_AMOUNT_ENTERED);
