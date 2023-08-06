@@ -1,21 +1,26 @@
 /* Define CSS classes with different colors */
 .navy {
     color: navy;
+    font-weight: bold;
 }
 
 .green {
+    font-weight: bold;
     color: green;
 }
 
 .red {
+    font-weight: bold;
     color: red;
 }
 
 .orange {
     color: orange;
+    font-weight: bold;
 }
 
 .blue {
+    font-weight: bold;
     color: blue;
 }
 
@@ -24,8 +29,14 @@ footer {
     text-align: center;
     padding: 10px;
     font-size: 14px;
-    color: white;
+    color: #00ff00;
+    font-weight: bold;
     background-color: #ffa07a; /* coral color */
+}
+
+p {
+    font-weight: bold;
+    text-indent: 30px;
 }
 
 body {
@@ -34,8 +45,20 @@ body {
     border-width: 7px;
     border-color: coral;
     padding: 25px
+    font-weight: bold;
+    background-color: pink;
+    text-transform: uppercase;
 }
 
 h1 {
+    text-align: center;
     color: #00ff00;
+    background-color: #ffa07a;
+    font-weight: bold;
+}
+
+h2 {
+    text-align: center;
+    color: #00ff00;
+    background-color: #ffa07a;
 }
