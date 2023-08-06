@@ -31,26 +31,23 @@ public class ReportPrinter {
                 "<html>\n" +
                 "<head>\n" +
                 "    <title>Currency Conversion Report</title>\n" +
-                "    <style>\n" +
-                "        body { font-family: Arial, sans-serif;}\n" +
-                "        h1 { color: #007bff; }\n" +
-                "        footer {text-align: center; padding: 3px; background-color: DarkSalmon; }\n" +
-                "        p {color: navy;text-indent: 30px;text-transform: uppercase;}\n" +
-                "    </style>\n" +
                 "    <link href=\"resources/style.css\" rel=\"stylesheet\">\n" +
                 "    <script src=\"resources/script.js\"></script>\n" +
                 "</head>\n" +
                 "<body>\n" +
-                "   <h1> Conversion Status </h1>\n" +
-                "   <p> Conversion Date: " + date + " </p>\n" +
-                "   <p> The starting currency value: " + fromValue + " </p>\n" +
-                "   <p> Departure currency: " + fromCurrency + " </p>\n" +
+                "   <h1 > Conversion Status </h1>\n" +
+                "   <hr>\n" +
+                "       <h2 > Generated today: <span id=\"currentDateTime\"></h2>\n" +
+                "   <hr>\n" +
+                "   <p class=\"navy\"> Conversion Date: " + date + " </p>\n" +
+                "   <p class=\"green\"> The starting currency value: " + fromValue + " </p>\n" +
+                "   <p class=\"red\"> Departure currency: " + fromCurrency + " </p>\n" +
                 "   <p> Arrival currency value: " + toValue + " </p>\n" +
-                "   <p> Arrival currency: " + toCurrency + " </p>\n" +
-                "   <p> Conversion value: " + convertedValue + " </p>\n" +
+                "   <p class=\"orange\"> Arrival currency: " + toCurrency + " </p>\n" +
+                "   <p class=\"blue\"> Conversion value: " + convertedValue + " </p>\n" +
                 "</body>\n" +
                 "<footer>\n" +
-                "    <p> Developed by Andreea Draghici. </p>\n" +
+                "    <p> Developed by Andreea Draghici</p>\n" +
                 "</footer>\n" +
                 "</html>";
 
