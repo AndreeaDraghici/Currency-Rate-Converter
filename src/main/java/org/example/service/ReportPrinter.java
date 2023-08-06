@@ -46,9 +46,11 @@ public class ReportPrinter {
                 "   <p class=\"orange\"> Arrival currency: " + toCurrency + " </p>\n" +
                 "   <p class=\"blue\"> Conversion value: " + convertedValue + " </p>\n" +
                 "</body>\n" +
-                "<footer>\n" +
-                "    <p> Developed by Andreea Draghici</p>\n" +
-                "</footer>\n" +
+                "   <hr>\n" +
+                "       <footer>\n" +
+                "            <p> Developed by Andreea Draghici</p>\n" +
+                "       </footer>\n" +
+                "   <hr>\n" +
                 "</html>";
 
         saveReportToFile(file, htmlContent);
