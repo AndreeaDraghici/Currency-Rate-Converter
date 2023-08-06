@@ -19,6 +19,7 @@ This is an GUI Application ( JavaFX based ) to convert the currency rate.
 
 It is running via GUI.
 
+
 ![UI.png](src/main/resources/images/UI.png)
 
 The application also has a menu bar with two options, File and Help.
