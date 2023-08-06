@@ -29,9 +29,9 @@ footer {
     text-align: center;
     padding: 10px;
     font-size: 14px;
-    color: #00ff00;
+    color: green;
     font-weight: bold;
-    background-color: #ffa07a; /* coral color */
+    background-color: #FFE4E1; /* Gold color */
 }
 
 p {
@@ -46,19 +46,27 @@ body {
     border-color: coral;
     padding: 25px
     font-weight: bold;
-    background-color: pink;
+    background-color:#FFEFD5;
     text-transform: uppercase;
 }
 
 h1 {
     text-align: center;
-    color: #00ff00;
-    background-color: #ffa07a;
+    color:coral;
+    background-color: #FFE4E1;
     font-weight: bold;
+    position: relative;
+    animation: mylastmove 5s infinite;
+}
+
+@keyframes mylastmove {
+  from {background-color: red;}
+  to {background-color: blue;}
 }
 
 h2 {
     text-align: center;
-    color: #00ff00;
-    background-color: #ffa07a;
+    color: green;
+    background-color: #FFE4E1;
+    font-weight: bold;
 }
