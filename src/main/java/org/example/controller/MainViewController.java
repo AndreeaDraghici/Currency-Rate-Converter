@@ -27,6 +27,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.example.service.ReportPrinter;
 
 
 import static org.example.util.Constants.*;
@@ -63,7 +64,7 @@ public class MainViewController {
     private Button applyBtn;
 
     @FXML
-    private Text rateCcy;
+    private Text currencyRate;
 
     @FXML
     private Text conversionTotal;
@@ -117,25 +118,35 @@ public class MainViewController {
         });
     }
 
+    /**
+     * performs currency conversion, updates the UI with conversion results, and generates a report
+     *
+     * @param file          -  the file where the report will be saved
+     * @param currencyOne   -  the currency code of the first currency
+     * @param toCurrencyTwo -  the currency code of the second currency
+     */
     private void buildCurrencyConversion(File file, String currencyOne, String toCurrencyTwo) {
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        ReportPrinter printer = new ReportPrinter();
         dateStamp.setText(SIMPLE_DATE_FORMAT.format(timestamp));
 
+        // calculate the exchange rate from the first currency to the second currency
         double currencyTwoValue = exchangeRates.get(toCurrencyTwo) / exchangeRates.get(currencyOne);
-        String ccyTwoStr = String.format("%s %s", String.format("%.2f", currencyTwoValue), toCurrencyTwo);
 
-        rateCcy.setText(ccyTwoStr);
+        // format the exchange rate as a string with two decimal places and the currency code
+        String currencyTwoString = String.format("%s %s", String.format("%.2f", currencyTwoValue), toCurrencyTwo);
+        currencyRate.setText(currencyTwoString);
 
         try {
+            // parse the amount entered by the user as a double
             double amount = Double.parseDouble(amountField.getText());
             double total = currencyTwoValue * amount;
 
-            String totalStr = String.format("%s %s", String.format("%.2f", total), toCurrencyTwo);
+            String totalToString = String.format("%s %s", String.format("%.2f", total), toCurrencyTwo);
+            conversionTotal.setText(totalToString);
 
-            conversionTotal.setText(totalStr);
-
-            generateReport(file, timestamp, amount, currencyOne, currencyTwoValue, toCurrencyTwo, total);
+            printer.generateReport(file, timestamp, amount, currencyOne, currencyTwoValue, toCurrencyTwo, total);
 
         } catch (NumberFormatException e) {
             throw new RuntimeException(INVALID_AMOUNT_ENTERED);
@@ -192,7 +203,7 @@ public class MainViewController {
                 }
             }
         } catch (IOException e) {
-            logger.error("Failed to open the documentation due to: " + e.getMessage());
+            throw new RuntimeException("Failed to open the documentation due to: " + e.getMessage());
         }
     }
 
@@ -211,41 +222,4 @@ public class MainViewController {
         // Add other currency rates as needed
     }
 
-    private void generateReport(File file, Timestamp date, double fromValue, String fromCurrency, double toValue, String toCurrency, double convertedValue) {
-        String htmlContent = "<!DOCTYPE html>\n" +
-                "<html>\n" +
-                "<head>\n" +
-                "    <title>Currency Conversion Report</title>\n" +
-                "    <style>\n" +
-                "        body { font-family: Arial, sans-serif; background-color: #8FBC8F;}\n" +
-                "        h1 { color: #007bff; }\n" +
-                "        footer {text-align: center; padding: 3px; background-color: DarkSalmon; color: white; + }\n" +
-                "        p {color: navy;text-indent: 30px;text-transform: uppercase;}" +
-                "    </style>\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "<h1>Conversion Status</h1>\n" +
-                "<p>Conversion Date: " + date + "</p>\n" +
-                "<p>The starting currency value: " + fromValue + "</p>\n" +
-                "<p>Departure currency: " + fromCurrency + "</p>\n" +
-                "<p>Arrival currency value: " + toValue + "</p>\n" +
-                "<p>Arrival currency: " + toCurrency + "</p>\n" +
-                "<p>Conversion value: " + convertedValue + "</p>\n" +
-                "</body>\n" +
-                "<footer>\n" +
-                "    <p>Developed by Andreea Draghici.</p>\n" +
-                "</footer>\n" +
-                "</html>";
-
-        saveReportToFile(file, htmlContent);
-
-    }
-
-    private void saveReportToFile(File file, String htmlContent) throws RuntimeException {
-        try (PrintWriter writer = new PrintWriter(file)) {
-            writer.write(htmlContent);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException("Failed to save the report generation due to: " + e.getMessage());
-        }
-    }
 }

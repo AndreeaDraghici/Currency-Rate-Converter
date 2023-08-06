@@ -41,7 +41,7 @@
                 <Font name="Arial Bold" size="16.0" />
             </font>
         </Text>
-        <Text fx:id="rateCcy" fill="#163851" layoutX="146.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="340.0">
+        <Text fx:id="currencyRate" fill="#163851" layoutX="146.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="340.0">
             <font>
                 <Font name="Arial Bold" size="16.0" />
             </font>
