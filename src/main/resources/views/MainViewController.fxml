@@ -41,20 +41,25 @@
                 <Font name="Arial Bold" size="16.0" />
             </font>
         </Text>
-        <Text fx:id="currencyRate" fill="#163851" layoutX="146.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="340.0">
+        <Text fx:id="currencyRate" fill="#163851" layoutX="145.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="269.8000030517578">
             <font>
                 <Font name="Arial Bold" size="16.0" />
             </font>
         </Text>
-        <Text fx:id="conversionTotal" fill="#11354e" layoutX="130.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="354.13671875">
+        <Text fx:id="conversionTotal" fill="#11354e" layoutX="122.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="278.8000030517578">
             <font>
                 <Font name="Arial Bold" size="16.0" />
             </font>
         </Text>
-        <Text fx:id="dateStamp" fill="#163851" layoutX="59.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="269.8000030517578">
+        <Text fx:id="dateStamp" fill="#163851" layoutX="57.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="269.8000030517578">
             <font>
                 <Font name="Arial Bold" size="16.0" />
             </font>
         </Text>
+      <Text fill="#cf1d57" layoutX="72.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currency Rate" textAlignment="CENTER" wrappingWidth="354.13671875">
+         <font>
+            <Font name="Arial Bold" size="20.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>

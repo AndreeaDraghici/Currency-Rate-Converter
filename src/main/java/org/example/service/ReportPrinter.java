@@ -104,7 +104,7 @@ public class ReportPrinter {
             writer.write(htmlContent);
             logger.info(String.format("Generated %s report.", file.getAbsoluteFile()));
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("Failed to save the report generation due to: " + e.getMessage());
+            throw new RuntimeException(String.format("Failed to save the report generation due to: %s", e.getMessage()));
         }
     }
 
