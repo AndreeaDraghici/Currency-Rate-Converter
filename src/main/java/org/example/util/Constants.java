@@ -31,4 +31,8 @@ public class Constants {
 
     public static final String CONVERSION_WAS_CREATED_WITH_SUCCESS               = "Currency conversion was created with success!";
 
+    public static final String STYLE_CSS                                         = "/style.css";
+
+    public static final String SCRIPT_JS                                         = "/script.js";
+
 }
