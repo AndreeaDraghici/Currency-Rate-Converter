@@ -88,7 +88,7 @@ public class ReportPrinter {
     }
 
     private static void filesChecked(InputStream styleFile, InputStream scriptFile, Path path) {
-        if (styleFile != null) {
+        if (styleFile != null && scriptFile != null) {
             logger.info("Files style.css and script.js were copied with succes into resources directory.");
             try {
                 Files.copy(styleFile, path.resolve("style.css"), StandardCopyOption.REPLACE_EXISTING);
