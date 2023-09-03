@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
 
+import static org.example.service.model.Report.*;
 import static org.example.util.Constants.SCRIPT_JS;
 import static org.example.util.Constants.STYLE_CSS;
 
@@ -27,6 +28,7 @@ public class ReportPrinter {
 
         copyStaticResources(URI.create(String.valueOf(Paths.get(file.getParent()).toUri())));
 
+
         String htmlContent = "<!DOCTYPE html>\n" +
                 "<html>\n" +
                 "<head>\n" +
@@ -39,12 +41,12 @@ public class ReportPrinter {
                 "   <hr>\n" +
                 "       <h2 > Generated today: <span id=\"currentDateTime\"></h2>\n" +
                 "   <hr>\n" +
-                "   <p class=\"navy\"> Conversion Date: " + date + " </p>\n" +
-                "   <p class=\"green\"> The starting currency value: " + fromValue + " </p>\n" +
-                "   <p class=\"red\"> Departure currency: " + fromCurrency + " </p>\n" +
-                "   <p> Arrival currency value: " + toValue + " </p>\n" +
-                "   <p class=\"orange\"> Arrival currency: " + toCurrency + " </p>\n" +
-                "   <p class=\"blue\"> Conversion value: " + convertedValue + " </p>\n" +
+                "   <p class=\"navy\"> Conversion Date: " + getDate(date) + " </p>\n" +
+                "   <p class=\"green\"> The starting currency value: " + getFromValue(fromValue) + " </p>\n" +
+                "   <p class=\"red\"> Departure currency: " + getFromCurrency(fromCurrency) + " </p>\n" +
+                "   <p> Arrival currency value: " + getToValue(toValue) + " </p>\n" +
+                "   <p class=\"orange\"> Arrival currency: " + getToCurrency(toCurrency) + " </p>\n" +
+                "   <p class=\"blue\"> Conversion value: " + getConvertedValue(convertedValue) + " </p>\n" +
                 "</body>\n" +
                 "   <hr>\n" +
                 "       <footer>\n" +
@@ -56,6 +58,7 @@ public class ReportPrinter {
         saveReportToFile(file, htmlContent);
 
     }
+
 
     /**
      * method that copies the static resources of the output to the output folder.
