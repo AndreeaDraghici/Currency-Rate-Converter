@@ -4,7 +4,6 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URL;
 import java.nio.file.*;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -46,13 +45,6 @@ public class MainViewController {
     @FXML
     public AnchorPane rootPane;
 
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
     @FXML
     private TextField amountField;
 
@@ -68,9 +60,9 @@ public class MainViewController {
     @FXML
     private Text dateStamp;
 
-    private final Map<String, Double> exchangeRates = new HashMap<>();
+    private Map<String, Double> exchangeRates = new HashMap<>();
 
-    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @FXML
     void initialize() {

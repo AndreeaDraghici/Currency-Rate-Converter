@@ -13,6 +13,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
 
+import static converter.tool.util.Constants.COPIED_WITH_SUCCES_INTO_RESOURCES_DIRECTORY;
+
 
 /**
  * Created by Andreea Draghici on 8/6/2023
@@ -90,7 +92,7 @@ public class ReportPrinter {
 
     private static void filesChecked(InputStream styleFile, InputStream scriptFile, Path path) {
         if (styleFile != null && scriptFile != null) {
-            logger.info("Files style.css and script.js were copied with succes into resources directory.");
+            logger.info(COPIED_WITH_SUCCES_INTO_RESOURCES_DIRECTORY);
             try {
                 Files.copy(styleFile, path.resolve("style.css"), StandardCopyOption.REPLACE_EXISTING);
                 Files.copy(scriptFile, path.resolve("script.js"), StandardCopyOption.REPLACE_EXISTING);

@@ -10,6 +10,9 @@ import org.apache.logging.log4j.Logger;
 import converter.tool.application.builder.SceneBuilder;
 import converter.tool.application.iface.IApplication;
 
+import static converter.tool.util.Constants.APPLICATION_IS_RUNNING;
+import static converter.tool.util.Constants.COULD_START_THE_APPLICATION;
+
 /**
  * Created by Andreea Draghici on 9/23/2023
  * Name of project: CurrencyConvertor
@@ -38,7 +41,7 @@ public class GUIApplication extends Application implements IApplication {
     @Override
     public void start(Stage primaryStage) throws Exception {
         GUIApplication.mainStage = primaryStage;
-        logger.info("Application is running...");
+        logger.info(APPLICATION_IS_RUNNING);
 
         try {
             primaryStage.setTitle(String.format("%s%s", Constants.TOOL_NAME, Constants.TOOL_VERSION));
@@ -49,7 +52,7 @@ public class GUIApplication extends Application implements IApplication {
             setWindow(primaryStage);
 
         } catch (Exception exception) {
-            logger.error(String.format("Could start the GUI application due to: %s", exception.getMessage()));
+            logger.error(String.format(COULD_START_THE_APPLICATION + " %s", exception.getMessage()));
 
         }
     }
