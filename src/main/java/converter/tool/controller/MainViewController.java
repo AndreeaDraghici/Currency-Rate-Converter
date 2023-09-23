@@ -1,10 +1,8 @@
-package org.example.controller;
+package converter.tool.controller;
 
 import java.awt.*;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URL;
 import java.nio.file.*;
@@ -13,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Stream;
 
+import converter.tool.service.ReportPrinter;
+import converter.tool.util.Constants;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -27,10 +27,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.example.service.ReportPrinter;
-
-
-import static org.example.util.Constants.*;
 
 
 /**
@@ -100,10 +96,10 @@ public class MainViewController {
                     if (exchangeRates.containsKey(currencyOne) && exchangeRates.containsKey(toCurrencyTwo)) {
                         if (file != null) {
                             buildCurrencyConversion(file, currencyOne, toCurrencyTwo);
-                            logger.info(CONVERSION_WAS_CREATED_WITH_SUCCESS);
+                            logger.info(Constants.CONVERSION_WAS_CREATED_WITH_SUCCESS);
                         }
                     } else {
-                        throw new RuntimeException(INVALID_CURRENCIES_ENTERED);
+                        throw new RuntimeException(Constants.INVALID_CURRENCIES_ENTERED);
                     }
                 }
             } catch (Exception exception) {
@@ -111,9 +107,9 @@ public class MainViewController {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 getAlertDefaultIcon(alert);
                 alert.setHeaderText("Warning");
-                alert.setContentText(String.format("%s%s", WARNING_TO_BUILD_THE_CURRENCY_CONVERSION, exception.getMessage()));
+                alert.setContentText(String.format("%s%s", Constants.WARNING_TO_BUILD_THE_CURRENCY_CONVERSION, exception.getMessage()));
                 alert.showAndWait();
-                logger.error(String.format("%s%s", WARNING_TO_BUILD_THE_CURRENCY_CONVERSION, exception.getMessage()));
+                logger.error(String.format("%s%s", Constants.WARNING_TO_BUILD_THE_CURRENCY_CONVERSION, exception.getMessage()));
             }
         });
     }
@@ -149,7 +145,7 @@ public class MainViewController {
             printer.generateReport(file, timestamp, amount, currencyOne, currencyTwoValue, toCurrencyTwo, total);
 
         } catch (NumberFormatException e) {
-            throw new RuntimeException(INVALID_AMOUNT_ENTERED);
+            throw new RuntimeException(Constants.INVALID_AMOUNT_ENTERED);
         }
     }
 

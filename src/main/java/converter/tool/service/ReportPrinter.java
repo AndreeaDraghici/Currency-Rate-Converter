@@ -1,5 +1,7 @@
-package org.example.service;
+package converter.tool.service;
 
+import converter.tool.service.model.Report;
+import converter.tool.util.Constants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,10 +12,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
-
-import static org.example.service.model.Report.*;
-import static org.example.util.Constants.SCRIPT_JS;
-import static org.example.util.Constants.STYLE_CSS;
 
 
 /**
@@ -41,12 +39,12 @@ public class ReportPrinter {
                 "   <hr>\n" +
                 "       <h2 > Generated today: <span id=\"currentDateTime\"></h2>\n" +
                 "   <hr>\n" +
-                "   <p class=\"navy\"> Conversion Date: " + getDate(date) + " </p>\n" +
-                "   <p class=\"green\"> The starting currency value: " + getFromValue(fromValue) + " </p>\n" +
-                "   <p class=\"red\"> Departure currency: " + getFromCurrency(fromCurrency) + " </p>\n" +
-                "   <p> Arrival currency value: " + getToValue(toValue) + " </p>\n" +
-                "   <p class=\"orange\"> Arrival currency: " + getToCurrency(toCurrency) + " </p>\n" +
-                "   <p class=\"blue\"> Conversion value: " + getConvertedValue(convertedValue) + " </p>\n" +
+                "   <p class=\"navy\"> Conversion Date: " + Report.getDate(date) + " </p>\n" +
+                "   <p class=\"green\"> The starting currency value: " + Report.getFromValue(fromValue) + " </p>\n" +
+                "   <p class=\"red\"> Departure currency: " + Report.getFromCurrency(fromCurrency) + " </p>\n" +
+                "   <p> Arrival currency value: " + Report.getToValue(toValue) + " </p>\n" +
+                "   <p class=\"orange\"> Arrival currency: " + Report.getToCurrency(toCurrency) + " </p>\n" +
+                "   <p class=\"blue\"> Conversion value: " + Report.getConvertedValue(convertedValue) + " </p>\n" +
                 "</body>\n" +
                 "   <hr>\n" +
                 "       <footer>\n" +
@@ -66,8 +64,8 @@ public class ReportPrinter {
      * @param path - path to copy output files to.
      */
     private void copyStaticResources(URI path) {
-        InputStream styleFile = getClass().getResourceAsStream(STYLE_CSS);
-        InputStream scriptFile = getClass().getResourceAsStream(SCRIPT_JS);
+        InputStream styleFile = getClass().getResourceAsStream(Constants.STYLE_CSS);
+        InputStream scriptFile = getClass().getResourceAsStream(Constants.SCRIPT_JS);
 
         File resources = new File(path.getPath() + "/resources");
         // if the directory does not exist, create it
@@ -79,7 +77,7 @@ public class ReportPrinter {
                 resources.mkdir();
                 result = true;
             } catch (SecurityException se) {
-                logger.warn(se.getMessage());
+                throw new RuntimeException(se.getMessage());
             }
             if (result) {
                 URI pathResources = Paths.get(resources.getAbsolutePath()).toUri();
@@ -107,7 +105,7 @@ public class ReportPrinter {
             writer.write(htmlContent);
             logger.info(String.format("Generated %s report.", file.getAbsoluteFile()));
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(String.format("Failed to save the report generation due to: %s", e.getMessage()));
+            logger.error(String.format("Failed to save the report generation due to: %s", e.getMessage()));
         }
     }
 

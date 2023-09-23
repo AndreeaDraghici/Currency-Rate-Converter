@@ -1,4 +1,4 @@
-package org.example.util;
+package converter.tool.util;
 
 /**
  * Created by Andreea Draghici on 8/1/2023
@@ -9,9 +9,9 @@ public class Constants {
     /**
      * Utilities Constants
      **/
-    public static final String FXML                                              = "/views/MainViewController.fxml";
+    public static final String FXML                                              = "views/MainViewController.fxml";
 
-    public static final String LOGO_JAVA                                         = "logo/logo.png";
+    public static final String LOGO_JAVA                                         = "/logo/logo.png";
 
     public static final int WIDTH                                                = 500;
 

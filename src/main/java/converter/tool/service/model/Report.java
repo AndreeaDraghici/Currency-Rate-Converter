@@ -1,4 +1,4 @@
-package org.example.service.model;
+package converter.tool.service.model;
 
 import java.sql.Time;
 import java.sql.Timestamp;
